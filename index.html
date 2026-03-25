@@ -381,7 +381,7 @@ async function runGemini(){
     var figmaB64=await toB64(designSrc),refB64=await toB64(refSrc);
     setOverlay(true,'Yapay zeka farkları analiz ediyor…');
     var prompt='You are a senior Design QA engineer. TWO images: Image 1=Design mockup, Image 2=Implementation. List ALL visual differences in Turkish (max 12 words each). Respond ONLY with valid JSON:\n{"findings":[{"id":1,"desc":"Buton rengi yanlış","normX":0.5,"normY":0.3,"normW":0.25,"normH":0.08,"criticality":"Kritik"}]}\ncriticality: Kritik|Orta|Düşük. If identical: {"findings":[]}';
-    var body={contents:[{parts:[{text:prompt},{inline_data:{mime_type:'image/png',data:figmaB64}},{inline_data:{mime_type:'image/png',data:refB64}}]}],generationConfig:{temperature:0.0,maxOutputTokens:4096,responseMimeType:'application/json'}};
+    var body={contents:[{parts:[{text:prompt},{inline_data:{mime_type:'image/jpeg',data:figmaB64}},{inline_data:{mime_type:'image/jpeg',data:refB64}}]}],generationConfig:{temperature:0.0,maxOutputTokens:4096,responseMimeType:'application/json'}};
     var res=await wFetch('/gemini',{method:'POST',body:JSON.stringify(body)});
     var data=await res.json();
     if(!res.ok)throw new Error(data.error||'Gemini hatası');
